@@ -6,6 +6,22 @@ Description: >
   This template generates a 2-environment CI/CD Pipeline for sample serverless API application
   Based on https://github.com/aws-samples/cookiecutter-aws-sam-pipeline
 
+Parameters:
+  GitHubOwner:
+    Type: String
+    Description: GitHub repository owner
+  GitHubRepo:
+    Type: String
+    Description: GitHub repository name
+  GitHubBranch:
+    Type: String
+    Description: GitHub branch name
+    Default: main
+  GitHubToken:
+    Type: String
+    Description: GitHub OAuth Token
+    NoEcho: true
+
 Resources:
   LocationsServiceRepository: 
     Type: AWS::ECR::Repository
@@ -193,17 +209,17 @@ Resources:
       Stages:
         - Name: Source
           Actions:
-            - Name: SourceCodeRepo
+            - Name: Source
               ActionTypeId:
                 Category: Source
                 Owner: ThirdParty
                 Provider: GitHub
                 Version: 1
               Configuration:
-                Owner: !Ref githubOwner
-                Repo: !Ref githubRepoName
-                OAuthToken: !Ref githubOauthToken
-                Branch: main
+                Owner: !Ref GitHubOwner
+                Repo: !Ref GitHubRepo
+                Branch: !Ref GitHubBranch
+                OAuthToken: !Ref GitHubToken
               OutputArtifacts:
                 - Name: SourceCodeAsZip
               RunOrder: 1
