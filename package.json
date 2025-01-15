@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@smithy/smithy-client": "^4.1.1"
+  }
+}
